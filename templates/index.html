@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        
+
+
+        <meta name="description" content="">
+        <meta name="author" content="pixelcave">
+        <meta name="robots" content="noindex, nofollow">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <!-- Favicon icon -->
+    <title>KEYSTONE</title>
+    <!-- Bootstrap Core CSS -->
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Custom CSS -->
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style3.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style8.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style9.css') }}">
+
+<!--   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ -->    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
+    <!--[if lt IE 9]>
+    <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style11.css') }}">
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style12.css') }}">
+   <style type="text/css">
+  
+nav{
+  background-color: #AC3535 !important;
+
+}
+nav ul li a{
+   color: #fff !important;
+}
+.dropdown-menu{
+  background-color: #AC3535!important;
+}
+.dropdown-item:hover{
+  background-color: #AC3535 !important;
+}
+.dropdown-menu a{
+ color: #fff !important;
+}
+.home{
+  cursor: pointer;
+}
+.navbar-brand{
+  color: #fff;
+}
+.navbar-brand:hover{
+  color:#fff;
+}
+.md{
+  color:#fff !important;
+  cursor: pointer;
+}
+.md:hover{
+  color:#fff !important;
+}
+</style> 
+<nav class="navbar  navbar-expand-lg  ">
+  <a class="navbar-brand menuL md">KEYSTONE</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="color: white">
+  <img src="/static/navbarmenu.svg" width="30px">
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" > 
+    <ul class="navbar-nav ml-auto " >
+      <li class="nav-item home">
+        <a class="nav-link menuL"  href="/" data-toggle="collapse" data-target=".navbar-collapse.show"><img src="/static/homemenu.svg" width="30px;"> Home <span class="sr-only"></span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  function RemoveParameterFromUrl(url, parameter) {
+  return url
+    .replace(new RegExp('[?&]' + parameter + '=[^&#]*(#.*)?$'), '$1')
+    .replace(new RegExp('([?&])' + parameter + '=[^&]*&'), '$1');
+  }
+  
+  function redirect(key, value) {
+    const urlParams = new URLSearchParams(window.location.search);
+
+
+    url = window.location.href.split('/')
+    s1 = url[url.length - 1]
+    if (s1.includes('score=1') && key == 'score') {
+      urlParams.set('score', '-1');
+      window.location.search = urlParams;
+      return true;
+    }
+    if (s1.includes('score=-1') && key == 'score') {
+      window.location.search = RemoveParameterFromUrl(window.location.search,key);
+      return true;
+    }
+    if (s1.includes('date=1') && key == 'date') {
+      urlParams.set('date', '-1');
+      window.location.search = urlParams;
+      return true;
+    }
+    if (s1.includes('date=-1') && key == 'date') {
+      window.location.search = RemoveParameterFromUrl(window.location.search,key);
+      return true;
+    }    
+    if (s1.includes(value) && s1.includes(key)) {
+      window.location.search = RemoveParameterFromUrl(window.location.search,key)
+      return true;
+    }
+    else {
+    urlParams.set(key, value);
+    window.location.search = urlParams;
+    return true;
+  }
+}
+
+function load(url) {
+  const full = location.protocol + '//' + location.host;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+location.reload();
+       }
+    };
+    xhttp.open("GET", location.protocol + '//' + location.host+url, true);
+    xhttp.send();
+}
+
+
+function delete_news(id) {
+  if (confirm('Are you sure ?')) {
+    load("/news/delete/"+id)
+  }
+}
+
+
+function vote(id,x) {
+    load("/news/upvote/"+id+"?vote="+x)
+}
+</script>
+
+
+
+
+
+
+
+<br><br><br>
+
+
+<center>
+  <a class="menuR">
+    <span onclick="redirect('filter','breach')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Breachs
+    </span>
+        <span onclick="redirect('filter','attack')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Cyber Attacks
+    </span>
+        <span onclick="redirect('filter','vuln')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Vulns
+    </span>
+        <span onclick="redirect('filter','malware')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Malware
+    </span>
+        <span onclick="redirect('filter','exploit')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Exploits
+    </span>
+        <span onclick="redirect('filter','tweet')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Tweets
+    </span>
+        <span onclick="redirect('date','1')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Date
+    </span>
+        <span onclick="redirect('score','1')" class="btn btn-de/static/bug.svgut btn-info" style=" background-color: #25354a;border:none;box-shadow: none;">Score
+    </span>
+  </a>
+</center>
+
+<div class="container-fluid">
+  <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+    <div class="row">
+      <div class="col-sm-12">
+        <div >
+          <a class="menuS" href="myaccounts" style="float: right;"> 
+          
+          </a>
+        <div id="example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap"><div class="row"><div class="col-sm-6"></div><div class="col-sm-6"><div id="example_filter" class="dataTables_filter"></div></div></div><div class="row"><div class="col-sm-12">
+
+
+
+
+
+
+
+<table class="table table-striped dataTable no-footer" id="example" cellpadding="0" cellspacing="0" align="center" data-page-length="20" role="grid" aria-describedby="example_info" style="width: 1320px;">
+<thead class="thead" style="background-color: #AC3535;color: #fff; ">
+<tr role="row">
+<td class="sorting_disabled" rowspan="1" colspan="1" style="width: 30.6px;" aria-label="Country">Type</td>
+<td class="sorting_disabled" rowspan="1" colspan="1" style="width: 100.6px;" aria-label="SSL">Text</td>
+<td class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 50.6px;">Link</td>
+<td class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 50.6px;">Source</td>
+<td class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 50.6px;">Date</td>
+<td class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 50.6px;">Score</td>
+<td class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 50.6px;">Update</td>
+<td class="sorting_disabled" tabindex="0" aria-controls="example" rowspan="1" colspan="1" style="width: 50.6px;">Delete</td>
+
+</tr>
+</thead>
+<tfoot style="background-color: #AC3535;color: #fff; ">
+<tr>
+<td rowspan="1" colspan="1">Type</td>
+<td rowspan="1" colspan="1">Text</td>
+<td rowspan="1" colspan="1">Link</td>
+<td rowspan="1" colspan="1">Source</td>
+<td rowspan="1" colspan="1">Date</td>
+<td rowspan="1" colspan="1">Score</td>
+<td rowspan="1" colspan="1">Update</td>
+<td rowspan="1" colspan="1">Delete</td>
+</tr>
+</tfoot>
+<tbody>
+{% for new in news %}
+<tr role="row" class="odd">
+<td>{{ new['type'] }}</a></td>
+<td><a href="/news/{{new['_id']}}">{{ new['text'] }}</td>
+<td><a href="{{new['link']}}" target="_blank">Link</td>
+<td>{{ new['source'] }}</td>
+<td>{{ new['date'] }}</td>
+<td>{{ new['score'] }}</td>
+<td style="float: center;" ><button class="btn btn-outline-info" onclick="vote('{{new['_id']}}','1')">Up-vote</button>
+<button class="btn btn-outline-warning" onclick="vote('{{new['_id']}}','-1')">Down-vote</button></td>
+<td style="float: left;"><button class="btn btn-outline-danger" onclick="delete_news('{{new['_id']}}')">Delete</button></td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    <style>
+        .rating {
+            unicode-bidi: bidi-override;
+            direction: rtl;
+        }
+        .rating > span {
+            display: inline-block;
+            position: relative;
+            width: 1.1em;
+        }
+        .rating > span:hover:before,
+        .rating > span:hover ~ span:before {
+            content: "\2605";
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+  <div id="news-place"></div>
+  <div class="main">
+              </div>
+  <center>
+<br>
+</div>
+<style>
+  #footeri{
+    background-color: #AC3535;
+    color:white;
+    padding:5px;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+    border: 0 solid black;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    z-index: 3;
+  }
+#footeri a{
+    color:white;
+}
+#footeri a:hover{
+    color:white;
+}
+
+    </style>
+
+   <center id="footeri"> Developed by &copy; <a href="">KEYSTONE</a></center>
+
+</body>
+</html>
