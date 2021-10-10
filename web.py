@@ -14,32 +14,25 @@ app.secret_key = b'_5#y2L"F4Q8zkaqsda5esdlzfkaz5"]/'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	if request.args.get("filter")!=None and request.args.get("date")!=None and request.args.get("score")!=None:
-		f = {'type':request.args.get("filter"),'show':1}
-		news = db.find("news",f).sort('date',int(request.args.get('date'))).sort('score',int(request.args.get('score')))
+	f = {'show':1}
 
-	elif request.args.get("filter")!=None and request.args.get("date")!=None:
-		f = {'type':request.args.get("filter"),'show':1}
-		news = db.find("news",f).sort('date',int(request.args.get('date')))
+	if request.args.get("filter")!=None:
+		f['type']=request.args.get("filter")
 
-	elif request.args.get("filter")!=None and request.args.get("score")!=None:
-		f = {'type':request.args.get("filter"),'show':1}
-		news = db.find("news",f).sort('score',int(request.args.get('score')))
+	if request.args.get('search')!=None:
+		f['$or']=[
+		{'text':{'$regex' : request.args.get("search"), '$options' : 'i'}},
+		{'source':{'$regex' : request.args.get("search"), '$options' : 'i'}}
+		]
 
-	elif request.args.get("score")!=None and request.args.get("date")!=None:
-		news = db.find("news",{'show':1}).sort('date',int(request.args.get('date'))).sort('score',int(request.args.get('score')))
+	news = db.find("news",f)
 
-	elif request.args.get("score")!=None:
-		news = db.find("news",{'show':1}).sort('score',int(request.args.get('score')))
+	if request.args.get("date")!=None:
+		news.sort('date',int(request.args.get('date')))
 
-	elif request.args.get("date")!=None:
-		news = db.find("news",{'show':1}).sort('date',int(request.args.get('date')))
+	if request.args.get('score')!=None:
+		news.sort('score',int(request.args.get('score')))
 
-	elif request.args.get("filter")!=None:
-		f = {'type':request.args.get("filter"),'show':1}
-		news = db.find("news",f)
-	else:
-		news = db.find("news",{'show':1})
 	return render_template('index.html',news=news)
 
 
