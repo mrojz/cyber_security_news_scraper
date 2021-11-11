@@ -26,4 +26,5 @@ then add this line (Change /path/to/file according to your environment)
 
 \* \* \* \* \* /usr/bin/python /path/to/file/app.py
 
+# Suggestions
 Project is still under development so if you have any suggestions please let me know :)
