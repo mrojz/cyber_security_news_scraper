@@ -1,5 +1,6 @@
 import requests, re
 from datetime import datetime
+from dateutil.parser import parse
 
 def get_hacker_news(url):
 
@@ -7,7 +8,7 @@ def get_hacker_news(url):
 
     links=re.findall("<a class='story-link' href=\"(.*?)\">",r.text)
     titles=re.findall("<h2 class='home-title'>(.*?)</h2>",r.text)
-
+    dates=re.findall("<i class='icon-font icon-calendar'>&#59394;</i>(.*?)<span><i class='icon-font icon-user'>&#59396;</i>",r.text)
     news=[]
 
     if 'breach' in url:
@@ -25,7 +26,7 @@ def get_hacker_news(url):
             'link':links[i],
             'text':titles[i],
             'type':news_type,
-            'date':str(datetime.now()),
+            'date':str(parse(dates[i])),
             'source':'hacker news',
             'score':0,
             'show':1
@@ -125,7 +126,7 @@ def get_exploitdb():
             'link':'https://www.exploit-db.com/exploits/{}'.format(data['description'][0]),
             'text':data['description'][1].replace('&#039;',"'"),
             'type':'exploit','verified':data['verified'],
-            'date':str(datetime.now()),
+            'date':str(parse(data['date_published'])),
             'source':'exploit db',
             'score':0,
             'show':1

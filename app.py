@@ -26,7 +26,7 @@ for i in r:
     db.update(key,i,"news")
 
 #Grab from users
-twitter_users = db.findall("twitter_users",{'_id': 0})
+twitter_users = db.find("twitter_users",{'muted': 0,'show':1})
 for user in twitter_users:
     tweets = get_tweets(user['user_id'],user['username'])
     for tweet in tweets:
@@ -35,5 +35,3 @@ for user in twitter_users:
             continue
         db.update(key,tweet,"news")
 
-for i in db.findall("news",{'type':'attack'}):
-    print(i)

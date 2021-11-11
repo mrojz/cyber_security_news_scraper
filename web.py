@@ -28,10 +28,12 @@ def index():
 	news = db.find("news",f)
 
 	if request.args.get("date")!=None:
-		news.sort('date',int(request.args.get('date')))
+		if request.args.get('date') in ['1','-1']:
+			news.sort('date',int(request.args.get('date')))
 
 	if request.args.get('score')!=None:
-		news.sort('score',int(request.args.get('score')))
+		if request.args.get('score') in ['1','-1']:
+			news.sort('score',int(request.args.get('score')))
 
 	return render_template('index.html',news=news)
 
@@ -46,13 +48,13 @@ def news(news_id):
 @app.route('/news/delete/<news_id>', methods=['GET', 'POST'])
 def delete_news(news_id):
 	news = db.update({"_id":ObjectId(news_id)},{"$set":{'show':0}},'news')
-	return redirect(url_for('index'))
+	return 'ok'
 
 @app.route('/news/upvote/<news_id>', methods=['GET', 'POST'])
 def upvote_news(news_id):
 	x = request.args.get('vote')
 	news = db.update({"_id":ObjectId(news_id)},{"$inc": {'score': int(x)}},'news')
-	return redirect(url_for('index'))
+	return 'ok'
 
 
 @app.route('/twitter', methods=['GET', 'POST'])
@@ -65,12 +67,12 @@ def twitter():
 def mute_bird(bird_id):
 	x = request.args.get('mute')
 	bird = db.update({"_id":ObjectId(bird_id)},{"$set":{'muted':int(x)}},'twitter_users')
-	return redirect(url_for('index'))
+	return redirect(url_for('twitter'))
 
 @app.route('/birds/delete/<bird_id>', methods=['GET', 'POST'])
 def delete_bird(bird_id):
 	bird = db.update({"_id":ObjectId(bird_id)},{"$set":{'show':0}},'twitter_users')
-	return redirect(url_for('index'))
+	return redirect(url_for('twitter'))
 
 @app.route('/birds/add/<bird_name>', methods=['GET', 'POST'])
 def add_user(bird_name):
@@ -81,7 +83,8 @@ def add_user(bird_name):
 	u = {'user_id':user_id,'username':bird_name,'muted':0,'show':1}
 	db.update(u,u,'twitter_users')
 	return redirect(url_for('twitter'))
+
+
 if __name__ == "__main__":
-	monkey.patch_all(ssl=False)
-	http_server = WSGIServer(('0.0.0.0', 5000), DebuggedApplication(app))
+	http_server = WSGIServer(('0.0.0.0', 5000), app)
 	http_server.serve_forever()
