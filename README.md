@@ -8,7 +8,7 @@
 
 **twitter.py**: collect news from specified accounts 
 
-**config.py**: required keys to collect data from twitter
+**config.py**: required keys to collect data from twitter (You should contact twitter to get the keys) 
 
 **db.py**: manage database queries
 
