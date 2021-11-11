@@ -1,6 +1,6 @@
 # security_news_scraper
 
-**app.py**: will scrape the news and save it to db
+**app.py**: calls others.py and twitter.py functions and save data to database
 
 **web.py**: web app to display data 
 
