@@ -12,11 +12,11 @@
 
 **db.py**: manage database queries
 
-#Install steps (python3.9):
+# Install steps (python3.9):
   pip install -r requirements.txt
   python web.py 
 
-###Create cron job to run app.py periodically
+### Create cron job to run app.py periodically
 
 Example every 1h :
 
