@@ -14,6 +14,7 @@
 
 # Install steps (python3.9):
   ~$ pip install -r requirements.txt
+  
   ~$ python web.py 
 
   Install mongodb : Follow steps on https://docs.mongodb.com/manual/administration/install-community/
